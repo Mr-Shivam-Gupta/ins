@@ -2,10 +2,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 // Import route modules
 const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
 const teamRoutes = require("./routes/team");
 const portfolioRoutes = require("./routes/portfolio");
 const galleryRoutes = require("./routes/gallery");
@@ -18,8 +20,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({ origin: "*" }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // MongoDB connection
 const connectDB = async () => {
@@ -46,6 +50,7 @@ app.get("/health", (req, res) => {
 
 // API Routes
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/gallery", galleryRoutes);

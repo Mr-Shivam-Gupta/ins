@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Portfolio = require("../models/Portfolio");
+const auth = require("../middleware/auth");
 
 // GET all portfolio items
 router.get("/", async (req, res) => {
@@ -28,8 +29,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// POST create portfolio item
-router.post("/", async (req, res) => {
+// POST create portfolio item (protected)
+router.post("/", auth, async (req, res) => {
   try {
     const item = new Portfolio(req.body);
     await item.save();
@@ -42,8 +43,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT update portfolio item
-router.put("/:id", async (req, res) => {
+// PUT update portfolio item (protected)
+router.put("/:id", auth, async (req, res) => {
   try {
     const item = await Portfolio.findByIdAndUpdate(
       req.params.id,
@@ -62,8 +63,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE portfolio item
-router.delete("/:id", async (req, res) => {
+// DELETE portfolio item (protected)
+router.delete("/:id", auth, async (req, res) => {
   try {
     const item = await Portfolio.findByIdAndDelete(req.params.id);
     if (!item) {
