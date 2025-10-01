@@ -71,16 +71,6 @@ app.use((err, req, res, next) => {
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(" Server running on http://localhost:" + PORT);
-    console.log(" API Documentation:");
-    console.log("   Users: GET,POST,PUT,DELETE /api/users");
-    console.log("   Team: GET,POST,PUT,DELETE /api/team");
-    console.log("   Portfolio: GET,POST,PUT,DELETE /api/portfolio");
-    console.log("   Gallery: GET,POST,PUT,DELETE /api/gallery");
-    console.log("   Contact: GET,POST,PUT,DELETE /api/contact");
-    console.log("   Blog: GET,POST,PUT,DELETE /api/blog");
-    console.log("   Hero Slider: GET,POST,PUT,DELETE /api/hero-slider");
-    console.log("   Blog Comments: POST /api/blog/:id/comments");
-    console.log("   Blog Likes: POST /api/blog/:id/likes");
   });
 }).catch((error) => {
   console.error("❌ Failed to start server:", error.message);
