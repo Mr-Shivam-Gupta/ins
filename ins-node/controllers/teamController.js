@@ -1,4 +1,3 @@
-// controllers/teamController.js
 const Team = require("../models/Team");
 
 // GET all team members
@@ -27,7 +26,13 @@ const getTeamById = async (req, res) => {
 // POST create team member
 const createTeam = async (req, res) => {
   try {
-    const member = new Team(req.body);
+    // Ensure socialLinks is an array of objects if provided
+    const { socialLinks, ...rest } = req.body;
+    const member = new Team({
+      ...rest,
+      socialLinks: Array.isArray(socialLinks) ? socialLinks : [],
+    });
+
     await member.save();
     res.status(201).json(member);
   } catch (err) {
@@ -41,11 +46,17 @@ const createTeam = async (req, res) => {
 // PUT update team member
 const updateTeam = async (req, res) => {
   try {
+    const { socialLinks, ...rest } = req.body;
+
     const member = await Team.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        ...rest,
+        ...(socialLinks && { socialLinks }), // update only if provided
+      },
       { new: true, runValidators: true }
     );
+
     if (!member) {
       return res.status(404).json({ error: "Team member not found" });
     }

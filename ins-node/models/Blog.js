@@ -1,5 +1,6 @@
 // models/Blog.js
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const commentSchema = new mongoose.Schema({
   name: { type: String }, // random visitor's name (optional)
@@ -7,7 +8,7 @@ const commentSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (value) {
-        return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        return !value || validator.isEmail(value);
       },
       message: "Please provide a valid email address",
     },
@@ -24,7 +25,7 @@ const likeSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (value) {
-        return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        return !value || validator.isEmail(value);
       },
       message: "Please provide a valid email address",
     },
