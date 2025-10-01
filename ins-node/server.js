@@ -1,8 +1,8 @@
 // server.js
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const { connectDB, healthCheck } = require("./utils/database");
 require("dotenv").config();
 
 // Import route modules
@@ -25,27 +25,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// MongoDB connection
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(
-      process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/ins-portfolio",
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    );
-    console.log(" MongoDB Connected:", conn.connection.host);
-  } catch (error) {
-    console.error(" Database connection error:", error.message);
-    process.exit(1);
-  }
-};
-
 // Basic routes
 app.get("/", (req, res) => {
   res.json({ message: " INS Portfolio API is running!" });
 });
 
-app.get("/health", (req, res) => {
-  res.json({ status: "OK", timestamp: new Date().toISOString() });
+app.get("/health", async (req, res) => {
+  try {
+    const dbHealth = await healthCheck();
+    res.json({ 
+      status: "OK", 
+      timestamp: new Date().toISOString(),
+      database: dbHealth
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      status: "ERROR", 
+      timestamp: new Date().toISOString(),
+      error: error.message
+    });
+  }
 });
 
 // API Routes
@@ -83,6 +82,9 @@ connectDB().then(() => {
     console.log("   Blog Comments: POST /api/blog/:id/comments");
     console.log("   Blog Likes: POST /api/blog/:id/likes");
   });
+}).catch((error) => {
+  console.error("❌ Failed to start server:", error.message);
+  process.exit(1);
 });
 
 module.exports = app;

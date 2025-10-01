@@ -5,7 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "db:connect": "node scripts/db-manager.js connect",
+    "db:status": "node scripts/db-manager.js status",
+    "db:seed": "node scripts/db-manager.js seed", 
+    "db:clear": "node scripts/db-manager.js clear"
   },
   "keywords": [],
   "author": "",
