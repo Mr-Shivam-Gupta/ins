@@ -11,13 +11,9 @@ let isConnected = false;
 async function connectDB() {
   try {
     const mongoURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/ins-portfolio";
-    
-    const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
 
-    await mongoose.connect(mongoURI, options);
+
+    await mongoose.connect(mongoURI);
     isConnected = true;
     
     logger.info(`✅ MongoDB Connected: ${mongoose.connection.host}`);

@@ -1,0 +1,18 @@
+2025-10-06 19:17:21 [ERROR]: ❌ Database connection error: connect ECONNREFUSED 127.0.0.1:27017
+2025-10-06 19:30:08 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-00.yt6pilu.mongodb.net
+2025-10-06 19:30:28 [INFO]: 📤 SIGINT received. Closing database connection...
+2025-10-06 19:30:34 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-01.yt6pilu.mongodb.net
+2025-10-06 19:31:02 [INFO]: 📤 SIGINT received. Closing database connection...
+2025-10-06 19:31:08 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-00.yt6pilu.mongodb.net
+2025-10-06 19:32:37 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-02.yt6pilu.mongodb.net
+2025-10-06 19:33:10 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-00.yt6pilu.mongodb.net
+2025-10-06 19:35:21 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-00.yt6pilu.mongodb.net
+2025-10-06 19:35:25 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-00.yt6pilu.mongodb.net
+2025-10-06 19:36:38 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-02.yt6pilu.mongodb.net
+2025-10-06 19:36:43 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-02.yt6pilu.mongodb.net
+2025-10-06 19:36:45 [INFO]: 📤 SIGINT received. Closing database connection...
+2025-10-06 19:36:55 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-02.yt6pilu.mongodb.net
+2025-10-06 19:52:31 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-01.yt6pilu.mongodb.net
+2025-10-06 20:10:08 [WARN]: 🟡 Mongoose disconnected
+2025-10-06 21:17:00 [INFO]: � Mongoose connected
+2025-10-06 21:46:50 [INFO]: ✅ MongoDB Connected: ac-hehsb5h-shard-00-02.yt6pilu.mongodb.net

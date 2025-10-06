@@ -58,7 +58,7 @@ app.use("/api/blog", blogRoutes);
 app.use("/api/hero-slider", heroSliderRoutes);
 
 // Error handling middleware
-app.use("*", (req, res) => {
+app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
