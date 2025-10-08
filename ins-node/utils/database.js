@@ -10,7 +10,7 @@ let isConnected = false;
  */
 async function connectDB() {
   try {
-    const mongoURI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/ins-portfolio";
+    const mongoURI = process.env.MONGODB_URI;
 
 
     await mongoose.connect(mongoURI);
