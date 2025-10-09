@@ -2,8 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { connectDB, healthCheck } = require("./utils/database");
 require("dotenv").config();
+const { connectDB, healthCheck } = require("./utils/database");
 
 // Import route modules
 const userRoutes = require("./routes/users");
@@ -48,8 +48,8 @@ app.get("/health", async (req, res) => {
 });
 
 // API Routes
+app.use("/api/", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/gallery", galleryRoutes);

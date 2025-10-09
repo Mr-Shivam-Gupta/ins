@@ -1,8 +1,19 @@
 const mongoose = require("mongoose");
 const logger = require("./logger");
+const path = require("path");
+const dotenv = require("dotenv");
+
 
 // Simple database connection utilities
 let isConnected = false;
+
+/**
+ * Get database URI based on environment
+ * @returns {string}
+ */
+function getDbURI() {
+  return "mongodb+srv://shivamDB:shivam1234@cluster0.l4wiiae.mongodb.net/ins-portfolio";
+}
 
 /**
  * Connect to MongoDB database
@@ -10,17 +21,15 @@ let isConnected = false;
  */
 async function connectDB() {
   try {
-    const mongoURI = process.env.MONGODB_URI;
-
+    const mongoURI = getDbURI();
 
     await mongoose.connect(mongoURI);
     isConnected = true;
-    
+
     logger.info(`✅ MongoDB Connected: ${mongoose.connection.host}`);
-    
+
     // Setup basic event listeners
     setupEventListeners();
-    
   } catch (error) {
     isConnected = false;
     logger.error(`❌ Database connection error: ${error.message}`);
@@ -63,10 +72,10 @@ function getConnectionInfo() {
   }
 
   const states = {
-    0: 'disconnected',
-    1: 'connected', 
-    2: 'connecting',
-    3: 'disconnecting'
+    0: "disconnected",
+    1: "connected",
+    2: "connecting",
+    3: "disconnecting",
   };
 
   return {
@@ -74,7 +83,7 @@ function getConnectionInfo() {
     port: mongoose.connection.port,
     name: mongoose.connection.name,
     readyState: mongoose.connection.readyState,
-    status: states[mongoose.connection.readyState] || 'unknown'
+    status: states[mongoose.connection.readyState] || "unknown",
   };
 }
 
@@ -86,25 +95,25 @@ async function healthCheck() {
   try {
     if (!isDBConnected()) {
       return {
-        status: 'error',
-        message: 'Database not connected'
+        status: "error",
+        message: "Database not connected",
       };
     }
 
     await mongoose.connection.db.admin().ping();
-    
+
     return {
-      status: 'healthy',
-      message: 'Database is working fine',
+      status: "healthy",
+      message: "Database is working fine",
       connection: getConnectionInfo(),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'Database health check failed',
+      status: "error",
+      message: "Database health check failed",
       error: error.message,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }
@@ -113,24 +122,24 @@ async function healthCheck() {
  * Setup basic connection event listeners
  */
 function setupEventListeners() {
-  mongoose.connection.on('connected', () => {
-    logger.info('� Mongoose connected');
+  mongoose.connection.on("connected", () => {
+    logger.info("� Mongoose connected");
     isConnected = true;
   });
 
-  mongoose.connection.on('error', (err) => {
+  mongoose.connection.on("error", (err) => {
     logger.error(`🔴 Mongoose error: ${err.message}`);
     isConnected = false;
   });
 
-  mongoose.connection.on('disconnected', () => {
-    logger.warn('🟡 Mongoose disconnected');
+  mongoose.connection.on("disconnected", () => {
+    logger.warn("🟡 Mongoose disconnected");
     isConnected = false;
   });
 
   // Graceful shutdown
-  process.on('SIGINT', async () => {
-    logger.info('📤 SIGINT received. Closing database connection...');
+  process.on("SIGINT", async () => {
+    logger.info("📤 SIGINT received. Closing database connection...");
     await disconnectDB();
     process.exit(0);
   });
@@ -141,5 +150,6 @@ module.exports = {
   disconnectDB,
   isDBConnected,
   getConnectionInfo,
-  healthCheck
+  healthCheck,
+  getDbURI,
 };
